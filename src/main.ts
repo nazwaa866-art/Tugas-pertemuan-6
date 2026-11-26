@@ -1,4 +1,5 @@
 import './styles/main.css';
+import { renderDocumentationSection } from './components/docsSection';
 import { loadAppConfig } from './config/env';
 import {
   COURSE_SUGGESTIONS,
@@ -10,13 +11,14 @@ import {
   toggleTaskStatus,
   updateTask,
 } from './services/taskManager';
-import type { CourseTask, StatusFilter, TaskPriority } from './types/task';
+import type { ActiveTab, CourseTask, StatusFilter, TaskPriority } from './types/task';
 import { LocalRepository } from './utils/collection';
 
 const appConfig = loadAppConfig();
 const taskRepository = new LocalRepository<CourseTask>('paw_p6_nazwa_tasks_v1');
 
 interface AppState {
+  activeTab: ActiveTab;
   tasks: CourseTask[];
   statusFilter: StatusFilter;
   searchQuery: string;
@@ -25,6 +27,7 @@ interface AppState {
 }
 
 const state: AppState = {
+  activeTab: 'tugas',
   tasks: taskRepository.load(INITIAL_TASKS),
   statusFilter: 'Semua',
   searchQuery: '',
@@ -313,32 +316,57 @@ function render(): void {
             )}, Kelas ${escapeHtml(appConfig.authorClass)}) untuk mengelola daftar tugas kuliah dengan TypeScript dan Vite.
           </p>
         </div>
+
+        <nav class="site-nav" aria-label="Navigasi utama">
+          <button
+            type="button"
+            class="nav-btn"
+            data-tab="tugas"
+            aria-pressed="${state.activeTab === 'tugas'}"
+          >
+            Daftar Tugas
+          </button>
+          <button
+            type="button"
+            class="nav-btn"
+            data-tab="dokumentasi"
+            aria-pressed="${state.activeTab === 'dokumentasi'}"
+          >
+            Materi Pertemuan 6
+          </button>
+        </nav>
       </header>
 
       <main>
-        <section class="summary-strip" aria-label="Ringkasan jumlah tugas">
-          <div class="summary-cell">
-            <span class="summary-label">Total Tugas</span>
-            <span class="summary-value">${summary.total}</span>
-          </div>
-          <div class="summary-cell">
-            <span class="summary-label">Belum Selesai</span>
-            <span class="summary-value">${summary.pending}</span>
-          </div>
-          <div class="summary-cell">
-            <span class="summary-label">Selesai</span>
-            <span class="summary-value">${summary.done}</span>
-          </div>
-          <div class="summary-cell">
-            <span class="summary-label">Progres Selesai</span>
-            <span class="summary-value">${summary.completionRate}%</span>
-          </div>
-        </section>
+        ${
+          state.activeTab === 'tugas'
+            ? `
+              <section class="summary-strip" aria-label="Ringkasan jumlah tugas">
+                <div class="summary-cell">
+                  <span class="summary-label">Total Tugas</span>
+                  <span class="summary-value">${summary.total}</span>
+                </div>
+                <div class="summary-cell">
+                  <span class="summary-label">Belum Selesai</span>
+                  <span class="summary-value">${summary.pending}</span>
+                </div>
+                <div class="summary-cell">
+                  <span class="summary-label">Selesai</span>
+                  <span class="summary-value">${summary.done}</span>
+                </div>
+                <div class="summary-cell">
+                  <span class="summary-label">Progres Selesai</span>
+                  <span class="summary-value">${summary.completionRate}%</span>
+                </div>
+              </section>
 
-        <div class="workspace-grid">
-          ${renderTaskForm()}
-          ${renderTaskList()}
-        </div>
+              <div class="workspace-grid">
+                ${renderTaskForm()}
+                ${renderTaskList()}
+              </div>
+            `
+            : renderDocumentationSection(appConfig)
+        }
       </main>
 
       <footer class="site-footer">
@@ -354,6 +382,13 @@ function render(): void {
 }
 
 function bindEvents(): void {
+  document.querySelectorAll<HTMLButtonElement>('[data-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      state.activeTab = (button.dataset.tab ?? 'tugas') as ActiveTab;
+      render();
+    });
+  });
+
   const form = document.querySelector<HTMLFormElement>('#task-form');
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
