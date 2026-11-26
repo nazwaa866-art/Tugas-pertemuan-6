@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Environment variables (jangan pernah unggah .env asli ke GitHub)
+.env
+.env.local
+.env.*.local
+
+# Logs and editor files
+*.log
+.DS_Store
+.vscode/
+.idea/
+coverage/
+
+# Temporary proof and doc generation files
+_proof/
+*.docx

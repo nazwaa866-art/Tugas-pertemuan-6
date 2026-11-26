@@ -1,0 +1,22 @@
+{
+  "name": "paw-tugas-pertemuan-6-nazwa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Aplikasi web pengelola daftar tugas kuliah menggunakan TypeScript dan Vite - Tugas Pertemuan 6 PAW",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.1.4"
+  }
+}
