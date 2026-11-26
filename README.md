@@ -17,6 +17,10 @@ Aplikasi web pengelola daftar tugas kuliah menggunakan TypeScript dan Vite untuk
 ## Status Rilis
 Versi: 1.0.0 (Aplikasi daftar tugas kuliah + halaman dokumentasi Pertemuan 6, siap deploy ke GitHub Pages dan Vercel)
 
+## Tautan Resmi
+- Website Pribadi: https://nazwakholifah.ai.studio/
+- Repository GitHub: https://github.com/nazwaa866-art/Tugas-pertemuan-6
+
 ## Menjalankan Proyek
 ```bash
 cp .env.example .env
