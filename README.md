@@ -15,7 +15,7 @@ Aplikasi web pengelola daftar tugas kuliah menggunakan TypeScript dan Vite untuk
 - Penyimpanan lokal menggunakan `localStorage` melalui repository generik TypeScript
 
 ## Status Rilis
-Versi: 1.0.0-alpha (Modul daftar tugas kuliah)
+Versi: 1.0.0-docs (Ditambahkan halaman dokumentasi Git, npm, TypeScript, Vite, dan .env)
 
 ## Menjalankan Proyek
 ```bash
